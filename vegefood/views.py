@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from .settings.base import INFO
+from .models import Product
 
 # Create your views here.
 
@@ -13,13 +14,6 @@ class IndexView(View):
 
 class ShopView(View):
     def get(self, request):
-        d = {'page_obg': [
-            {
-                'image': ...,
-                'name': ...,
-                'discount': ...,
-                'price_dc': ...,
-                'price_sale': ...,
-            }
-        ]}
-        return render(request, 'vegefood/shop.html')
+        context = INFO
+        context.update({'page_obj': Product.objects.all()})
+        return render(request, 'vegefood/shop.html', context)
