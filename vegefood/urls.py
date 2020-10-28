@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import IndexView, ShopView, WishlistView, ProductSingleView, CartView, CheckoutView
+from .views import IndexView, ShopView, WishlistView, ProductSingleView, CartView, CheckoutView, \
+    UserViewSet, ProductViewSet, CouponViewSet, CartViewSet
+from rest_framework import routers
+
+route = routers.SimpleRouter()
+route.register(r'users', UserViewSet)
+route.register(r'products', ProductViewSet)
+route.register(r'coupons', CouponViewSet)
+route.register(r'carts', CartViewSet)
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),
@@ -26,3 +34,5 @@ urlpatterns = [
     path('checkout/', CheckoutView.as_view(), name='checkout'),
 
 ]
+
+urlpatterns += route.urls
